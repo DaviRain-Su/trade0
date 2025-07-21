@@ -1,6 +1,0 @@
-nautilus-trader[bybit]
-pandas
-numpy
-matplotlib
-jupyter
-python-dotenv

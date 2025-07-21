@@ -41,15 +41,24 @@ def download_bybit_klines(symbol="BTCUSDT", interval="1", limit=1000, start_time
         
     try:
         response = requests.get(url, params=params)
+        print(f"Response status: {response.status_code}")
+        
+        if response.status_code != 200:
+            print(f"HTTP Error: {response.status_code}")
+            print(f"Response: {response.text[:200]}")
+            return None
+            
         data = response.json()
         
-        if data["retCode"] == 0:
+        if data.get("retCode") == 0:
             return data["result"]["list"]
         else:
-            print(f"Error: {data['retMsg']}")
+            print(f"API Error: {data.get('retMsg', 'Unknown error')}")
             return None
     except Exception as e:
         print(f"Request failed: {e}")
+        import traceback
+        traceback.print_exc()
         return None
 
 

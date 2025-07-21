@@ -43,7 +43,14 @@ def download_binance_klines(symbol="BTCUSDT", interval="1m", start_time=None, en
         
     try:
         response = requests.get(url, params=params)
-        return response.json()
+        data = response.json()
+        
+        # 检查是否有错误
+        if isinstance(data, dict) and 'code' in data:
+            print(f"API错误: {data.get('msg', 'Unknown error')}")
+            return None
+            
+        return data
     except Exception as e:
         print(f"请求失败: {e}")
         return None
@@ -76,7 +83,7 @@ def download_all_historical_data(symbol="BTCUSDT", start_date="2024-01-01", end_
             limit=1000
         )
         
-        if klines and len(klines) > 0:
+        if klines and isinstance(klines, list) and len(klines) > 0:
             all_klines.extend(klines)
             # 更新开始时间为最后一条数据的时间 + 1毫秒
             current_start = klines[-1][0] + 1
