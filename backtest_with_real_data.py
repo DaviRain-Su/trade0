@@ -185,7 +185,7 @@ def run_backtest_with_real_data(data_file="nautilus_data/historical/BTCUSDT_quot
     # 交易统计
     positions = engine.cache.positions()
     orders = engine.cache.orders()
-    filled_orders = [o for o in orders if o.is_filled]
+    filled_orders = [o for o in orders if o.status.name == "FILLED"]
     
     print(f"\n交易统计:")
     print(f"总订单数: {len(orders)}")
