@@ -13,7 +13,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 # 添加项目路径
-sys.path.append(str(Path(__file__).parent))
+sys.path.append(str(Path(__file__).parent.parent.parent))
 
 from nautilus_trader.config import TradingNodeConfig
 from nautilus_trader.live.node import TradingNode

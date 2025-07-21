@@ -15,7 +15,7 @@ from pathlib import Path
 import json
 
 # 添加项目路径
-sys.path.append(str(Path(__file__).parent))
+sys.path.append(str(Path(__file__).parent.parent.parent))
 
 
 def download_cryptocompare_data(symbol="BTC", currency="USDT", limit=2000):
