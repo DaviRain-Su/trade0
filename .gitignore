@@ -1,10 +1,46 @@
-# Python-generated files
+# Python
 __pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+*.py[cod]
+*.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
 
-# Virtual environments
-.venv
+# 环境变量
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 数据文件
+data/historical/*
+data/cache/*
+!data/historical/.gitkeep
+!data/cache/.gitkeep
+
+# 日志
+logs/*.log
+logs/**/*.log
+
+# 测试
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# 临时文件
+*.tmp
+*.bak
+
+# macOS
+.DS_Store
