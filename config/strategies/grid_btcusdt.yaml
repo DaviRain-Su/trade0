@@ -1,0 +1,91 @@
+# BTC/USDT 网格交易策略配置
+
+strategy:
+  name: "BTC网格策略"
+  version: "1.0.0"
+  
+# 交易配置
+trading:
+  instrument_id: "BTCUSDT-LINEAR.BYBIT"  # 交易对
+  exchange: "BYBIT"                      # 交易所
+  product_type: "LINEAR"                 # 产品类型：LINEAR(永续)/SPOT(现货)
+  
+# 网格参数
+grid:
+  levels: 20                             # 网格数量
+  spacing_type: "arithmetic"             # 网格类型：arithmetic(等差)/geometric(等比)
+  spacing: 0.005                         # 网格间距（百分比）
+  
+# 价格范围
+price_range:
+  # 固定价格范围（如果设置为null则自动计算）
+  upper_price: 45000                     # 网格上限
+  lower_price: 40000                     # 网格下限
+  
+  # 自动计算参数
+  auto_adjust: false                     # 是否自动调整范围
+  range_ratio: 0.1                       # 自动计算时的范围比例（相对于当前价格）
+  
+# 资金管理
+capital:
+  total_amount: 10000                    # 总投资额(USDT)
+  base_currency_ratio: 0.5               # 基础货币初始占比
+  reserve_ratio: 0.1                     # 保留资金比例（应急用）
+  
+# 订单设置
+order:
+  type: "LIMIT"                          # 订单类型
+  time_in_force: "GTC"                   # 订单有效期：GTC/IOC/FOK
+  post_only: true                        # 只做Maker（避免吃单手续费）
+  
+# 风险控制
+risk:
+  max_positions: 15                      # 最大持仓网格数
+  stop_loss_ratio: 0.15                  # 止损比例（相对于网格范围）
+  take_profit_ratio: 0.30                # 止盈比例
+  max_drawdown: 0.20                     # 最大回撤限制
+  
+  # 仓位限制
+  max_position_value: 5000               # 单个网格最大持仓价值
+  max_total_value: 8000                  # 总持仓最大价值
+  
+# 执行参数
+execution:
+  min_profit_ratio: 0.003                # 最小利润率（考虑手续费）
+  rebalance_threshold: 0.05              # 再平衡阈值
+  order_refresh_interval: 300            # 订单刷新间隔（秒）
+  
+# 市场条件
+market_conditions:
+  # 启动条件
+  max_volatility: 0.05                   # 最大波动率（24小时）
+  min_volume: 1000000                    # 最小成交量（USDT）
+  
+  # 暂停条件
+  trend_threshold: 0.15                  # 趋势强度阈值（暂停网格）
+  volatility_spike: 0.10                 # 波动率激增阈值
+  
+# 通知设置
+notifications:
+  telegram:
+    enabled: true
+    chat_id: "your_chat_id"
+    
+  email:
+    enabled: false
+    address: "your_email@example.com"
+    
+  # 通知事件
+  events:
+    - "strategy_start"
+    - "strategy_stop"
+    - "large_profit"                     # 大额盈利
+    - "stop_loss_triggered"              # 触发止损
+    - "error"                            # 系统错误
+    
+# 日志设置
+logging:
+  level: "INFO"                          # 日志级别：DEBUG/INFO/WARNING/ERROR
+  file: "logs/grid_btcusdt.log"         # 日志文件
+  max_size: "100MB"                      # 日志文件大小限制
+  backup_count: 5                        # 保留日志文件数量
